@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Auth API Test</title>
+</head>
+
+<body>
+    <h1>Authentication API Test</h1>
+
+    <div>
+        <h2>Test Signup</h2>
+        <button onclick="testSignup()">Test Signup</button>
+        <div id="signupResult"></div>
+    </div>
+
+    <div>
+        <h2>Test Login</h2>
+        <button onclick="testLogin()">Test Login</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <script>
+        async function testSignup() {
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'test@example.com',
+                        password: 'password123',
+                        name: 'Test User'
+                    }),
+                });
+
+                console.log('Signup response status:', response.status);
+                console.log('Signup response headers:', response.headers);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('signupResult').innerHTML =
+                        '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    const errorText = await response.text();
+                    document.getElementById('signupResult').innerHTML =
+                        '<pre>Error: ' + response.status + ' - ' + errorText + '</pre>';
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                document.getElementById('signupResult').innerHTML =
+                    '<pre>Error: ' + error.message + '</pre>';
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'test@example.com',
+                        password: 'password123'
+                    }),
+                });
+
+                console.log('Login response status:', response.status);
+                console.log('Login response headers:', response.headers);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('loginResult').innerHTML =
+                        '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    const errorText = await response.text();
+                    document.getElementById('loginResult').innerHTML =
+                        '<pre>Error: ' + response.status + ' - ' + errorText + '</pre>';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                document.getElementById('loginResult').innerHTML =
+                    '<pre>Error: ' + error.message + '</pre>';
+            }
+        }
+    </script>
+</body>
+
+</html>
