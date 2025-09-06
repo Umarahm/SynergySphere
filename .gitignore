@@ -25,3 +25,11 @@ dist-ssr
 
 .config/
 !.env
+
+# Environment and configuration files
+.env
+.builder
+netlify
+AGENTS.md
+AUTHENTICATION_SETUP.md
+index.html
